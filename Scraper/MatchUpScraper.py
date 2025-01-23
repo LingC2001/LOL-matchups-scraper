@@ -3,20 +3,21 @@ from urllib.request import Request, urlopen
 from re import findall
 
 class MatchUpScraper:
-    def __init__(self, champ1, champ2, lane, patch=None):
+    def __init__(self, champ1, champ2, lane, tier, patch=None):
         """
         initialises the web scraper for lolalytics website for the given matchup and lane
         :Inputs:
             champ1: Name of champion 1 as a string
             champ2: Name of champion 2 as a string
             lane: The lane for the matchup as a string. One of ["top", "jungle", "middle", "bottom", "support"]
+            tier: Which tiers to get the data from. E.g. ["all", "master_plus", "diamond_plus"]
             patch: The patch version for the data       
         """
         print(f"{champ1} vs {champ2}")
         if patch:
-            self.url = f"https://lolalytics.com/lol/{champ1.lower()}/vs/{champ2.lower()}/build/?lane={lane.lower()}&vslane={lane.lower()}&patch=15.1"
+            self.url = f"https://lolalytics.com/lol/{champ1.lower()}/vs/{champ2.lower()}/build/?lane={lane.lower()}&vslane={lane.lower()}&tier={tier.lower()}&patch=15.1"
         else: # latest patch if no patch version is specified
-            self.url = f"https://lolalytics.com/lol/{champ1.lower()}/vs/{champ2.lower()}/build/?lane={lane.lower()}&vslane={lane.lower()}"
+            self.url = f"https://lolalytics.com/lol/{champ1.lower()}/vs/{champ2.lower()}/build/?lane={lane.lower()}&vslane={lane.lower()}&tier={tier.lower()}"
         
         self.req = Request(self.url, headers={'User-Agent': 'Mozilla/5.0'})
         self.page = urlopen(self.req)

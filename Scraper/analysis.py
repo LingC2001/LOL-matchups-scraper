@@ -6,7 +6,7 @@ class DataCompiler:
         """
         Initialise data compiler that creates a dataframe and stores information regarding matchups
         """
-        self.own_champs = ["Riven", "Mordekaiser", "Ambessa", "Volibear", "Galio", "Aatrox", "Malphite", "Camille", "Jax", "Viktor"]
+        self.own_champs = ["Riven", "Mordekaiser", "Ambessa", "Volibear", "Pantheon", "Galio", "Aatrox", "Malphite", "Camille", "Jax", "Viktor"]
         self.toplane_champs = ["Aatrox", "Akali", "Ambessa", "Aurora", "Camille", "Cassiopeia", "ChoGath", "Darius", "DrMundo", "Fiora", "Galio", "Gangplank", "Garen", "Gnar", "Gragas", "Gwen", "Heimerdinger", "Illaoi", "Irelia", "Jax", "Jayce", "KSante", "Karma", "Kayle", "Kennen", "Kled", "Malphite", "Maokai", "Mordekaiser", "Nasus", "Olaf", "Ornn", "Pantheon", "Poppy", "Quinn", "Renekton", "Rengar", "Riven", "Rumble", "Ryze", "Sett", "Shen", "Singed", "Sion", "Smolder", "Swain", "Sylas", "TahmKench", "Teemo", "Trundle", "Tryndamere", "Udyr", "Urgot", "Varus", "Vayne", "Viktor", "Vladimir", "Volibear", "Warwick", "Wukong", "Yasuo", "Yone", "Yorick", "Zac"]
         self.df = pd.DataFrame(columns=["Champion"]+self.own_champs)
 
@@ -18,7 +18,7 @@ class DataCompiler:
             row = [champ2]
             for champ1 in self.own_champs:
                 if champ1 != champ2:
-                    scraper = MatchUpScraper(champ1=champ1, champ2=champ2, lane="top", patch="15.1")
+                    scraper = MatchUpScraper(champ1=champ1, champ2=champ2, lane="top", tier="all", patch="15.1")
                     delta2 = scraper.get_winrate_delta2()
                     row.append(delta2)
                 else:
