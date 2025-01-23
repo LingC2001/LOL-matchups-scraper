@@ -3,15 +3,21 @@ from urllib.request import Request, urlopen
 from re import findall
 
 class MatchUpScraper:
-    def __init__(self, champ1, champ2, lane):
+    def __init__(self, champ1, champ2, lane, patch=None):
         """
         initialises the web scraper for lolalytics website for the given matchup and lane
-        :Input:
+        :Inputs:
             champ1: Name of champion 1 as a string
             champ2: Name of champion 2 as a string
             lane: The lane for the matchup as a string. One of ["top", "jungle", "middle", "bottom", "support"]
+            patch: The patch version for the data       
         """
-        self.url = f"https://lolalytics.com/lol/{champ1}/vs/{champ2}/build/?lane={lane}&vslane={lane}&patch=15.1"
+        print(f"{champ1} vs {champ2}")
+        if patch:
+            self.url = f"https://lolalytics.com/lol/{champ1.lower()}/vs/{champ2.lower()}/build/?lane={lane.lower()}&vslane={lane.lower()}&patch=15.1"
+        else: # latest patch if no patch version is specified
+            self.url = f"https://lolalytics.com/lol/{champ1.lower()}/vs/{champ2.lower()}/build/?lane={lane.lower()}&vslane={lane.lower()}"
+        
         self.req = Request(self.url, headers={'User-Agent': 'Mozilla/5.0'})
         self.page = urlopen(self.req)
         self.html = self.page.read().decode("utf-8")
@@ -25,5 +31,24 @@ class MatchUpScraper:
         """
         data = self.soup.find("p", class_="lolx-links px-2 text-justify text-[14px] leading-normal text-white sm:px-0")
         text = data.get_text()
-        winrates = findall(r'(\d+\.\d+)', text)
-        return winrates[2]
+        winrates = findall(r"[-]?\d+[.,]?\d*", text)
+        # print(winrates)
+        return float(winrates[2])
+
+    def get_winrate_delta(self):
+        """
+        Retrieve the delta value for the winrate
+        """
+        data = self.soup.find("p", class_="lolx-links px-2 text-justify text-[14px] leading-normal text-white sm:px-0")
+        text = data.get_text()
+        winrates = findall(r"[-]?\d+[.,]?\d*", text)
+        return float(winrates[1])
+    
+    def get_winrate(self):
+        """
+        Retrieve the winrate of champ1 vs champ2
+        """
+        data = self.soup.find("p", class_="lolx-links px-2 text-justify text-[14px] leading-normal text-white sm:px-0")
+        text = data.get_text()
+        winrates = findall(r"[-]?\d+[.,]?\d*", text)
+        return float(winrates[0])
