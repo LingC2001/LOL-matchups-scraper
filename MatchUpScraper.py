@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 from urllib.request import Request, urlopen
+from re import findall
 
 class MatchUpScraper:
     def __init__(self, champ1, champ2, lane):
@@ -10,7 +11,7 @@ class MatchUpScraper:
             champ2: Name of champion 2 as a string
             lane: The lane for the matchup as a string. One of ["top", "jungle", "middle", "bottom", "support"]
         """
-        self.url = f"https://lolalytics.com/lol/{champ1}/vs/{champ2}/build/?lane={lane}&vslane={lane}"
+        self.url = f"https://lolalytics.com/lol/{champ1}/vs/{champ2}/build/?lane={lane}&vslane={lane}&patch=15.1"
         self.req = Request(self.url, headers={'User-Agent': 'Mozilla/5.0'})
         self.page = urlopen(self.req)
         self.html = self.page.read().decode("utf-8")
@@ -22,5 +23,7 @@ class MatchUpScraper:
         to the average champion against champ2. E.g. If delta2 = 5 means champ1 has 5% higher winrate against champ2
         compared to the average champion against champ2, after both champions default winrates are considered.
         """
-        self.soup.find_all("p", class_="lolx-links px-2 text-justify text-[14px] leading-normal text-white sm:px-0")
-        
+        data = self.soup.find("p", class_="lolx-links px-2 text-justify text-[14px] leading-normal text-white sm:px-0")
+        text = data.get_text()
+        winrates = findall(r'(\d+\.\d+)', text)
+        return winrates[2]
