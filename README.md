@@ -2,7 +2,16 @@
 Web scraper used to scrape data from lolalytics website for matchups analysis.
 
 Used to create a spreadsheet of normalised matchup win rate deltas. 
-To use just change the list of champions in Scraper/analysis.py
+To generate the up-to-date spreadsheet, simply run the spreadsheetCreator script in the command line with the following args:
+
+--key : one of [base, delta1, delta2]
+    
+--filename : the name of the output spreadsheet including .xlsx extension
+
+#### Example
+```
+python spreadsheetCreator --key delta2 --filename matchups.xlsx
+```
 
 ## Generated Matchups Spreadsheet
 ![sheet](/images/matchups_ss.png)
