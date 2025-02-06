@@ -12,7 +12,7 @@ To generate the up-to-date spreadsheet, simply run the spreadsheetCreator script
 
 #### Example
 ```
-python spreadsheetCreator.py --key delta2 --patch 15.2 --filename matchups.xlsx
+python spreadsheetCreator.py --key delta2 --patch 15.2 --filename matchups_15_2.xlsx
 ```
 
 ## Generated Matchups Spreadsheet
