@@ -5,12 +5,14 @@ Used to create a spreadsheet of normalised matchup win rate deltas.
 To generate the up-to-date spreadsheet, simply run the spreadsheetCreator script in the command line with the following args:
 
 --key : one of [base, delta1, delta2]
+
+--patch : game patch version for the data, e.g. 15.2
     
 --filename : the name of the output spreadsheet including .xlsx extension
 
 #### Example
 ```
-python spreadsheetCreator.py --key delta2 --filename matchups.xlsx
+python spreadsheetCreator.py --key delta2 --patch 15.2 --filename matchups.xlsx
 ```
 
 ## Generated Matchups Spreadsheet
