@@ -4,7 +4,7 @@ Web scraper used to scrape data from lolalytics website for matchups analysis.
 Used to create a spreadsheet of normalised matchup win rate deltas. 
 To generate the up-to-date spreadsheet, simply run the spreadsheetCreator script in the command line with the following args:
 
---key : one of [base, delta1, delta2]
+--key : one of [winrate, delta1, delta2]
 
 --patch : game patch version for the data, e.g. 15.2
     
