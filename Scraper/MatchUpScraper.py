@@ -15,7 +15,7 @@ class MatchUpScraper:
         """
         print(f"{champ1} vs {champ2}")
         if patch:
-            self.url = f"https://lolalytics.com/lol/{champ1.lower()}/vs/{champ2.lower()}/build/?lane={lane.lower()}&vslane={lane.lower()}&tier={tier.lower()}&patch=15.1"
+            self.url = f"https://lolalytics.com/lol/{champ1.lower()}/vs/{champ2.lower()}/build/?lane={lane.lower()}&vslane={lane.lower()}&tier={tier.lower()}&patch={patch}"
         else: # latest patch if no patch version is specified
             self.url = f"https://lolalytics.com/lol/{champ1.lower()}/vs/{champ2.lower()}/build/?lane={lane.lower()}&vslane={lane.lower()}&tier={tier.lower()}"
         

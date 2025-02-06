@@ -7,11 +7,11 @@ class DataCompiler:
         """
         Initialise data compiler that creates a dataframe and stores information regarding matchups
         """
-        self.own_champs = ["Riven", "Mordekaiser", "Ambessa", "Volibear", "Pantheon", "Galio", "Aatrox", "Malphite", "Camille", "Jax", "Viktor"]
+        self.own_champs = ["Riven", "Mordekaiser", "Ambessa", "Volibear", "Garen"]
         self.toplane_champs = ["Aatrox", "Akali", "Ambessa", "Aurora", "Camille", "Cassiopeia", "ChoGath", "Darius", "DrMundo", "Fiora", "Galio", "Gangplank", "Garen", "Gnar", "Gragas", "Gwen", "Heimerdinger", "Illaoi", "Irelia", "Jax", "Jayce", "KSante", "Karma", "Kayle", "Kennen", "Kled", "Malphite", "Maokai", "Mordekaiser", "Nasus", "Olaf", "Ornn", "Pantheon", "Poppy", "Quinn", "Renekton", "Rengar", "Riven", "Rumble", "Ryze", "Sett", "Shen", "Singed", "Sion", "Smolder", "Swain", "Sylas", "TahmKench", "Teemo", "Trundle", "Tryndamere", "Udyr", "Urgot", "Varus", "Vayne", "Viktor", "Vladimir", "Volibear", "Warwick", "Wukong", "Yasuo", "Yone", "Yorick", "Zac"]
         self.df = pd.DataFrame(columns=["Champion"]+self.own_champs)
 
-    def get_winrate(self, mode):
+    def get_winrate(self, mode, patch):
         """
         Class method to extract the winrate values for each own_champ vs toplane_champ
         Input:
@@ -21,7 +21,7 @@ class DataCompiler:
             row = [champ2]
             for champ1 in self.own_champs:
                 if champ1 != champ2:
-                    scraper = MatchUpScraper(champ1=champ1, champ2=champ2, lane="top", tier="all", patch="15.1")
+                    scraper = MatchUpScraper(champ1=champ1, champ2=champ2, lane="top", tier="all", patch=patch)
                     if mode == "base":
                         winrate = scraper.get_winrate()
                     elif mode == "delta1":
@@ -43,13 +43,15 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog="SpreadsheetCreator",
                                      description="Compiles a spreadsheet matchup analysis of all league of legends top lane champions")
     parser.add_argument("--key", type=str)
+    parser.add_argument("--patch", type=str)
     parser.add_argument("--filename", default="matchups.xlsx", type=str)
     args = parser.parse_args()
     key = args.key
     filename = args.filename
-    print(f"Creating spreadsheet '{filename}' based on key={key}")
+    patch = args.patch
+    print(f"Creating spreadsheet '{filename}' for game patch {patch} based on key={key}")
     compiler = DataCompiler()
-    compiler.get_winrate(mode=key)
+    compiler.get_winrate(mode=key, patch=patch)
 
     compiler.write_to_file(filename)
         
