@@ -10,7 +10,7 @@ To generate the up-to-date spreadsheet, simply run the spreadsheetCreator script
 
 #### Example
 ```
-python spreadsheetCreator --key delta2 --filename matchups.xlsx
+python spreadsheetCreator.py --key delta2 --filename matchups.xlsx
 ```
 
 ## Generated Matchups Spreadsheet
