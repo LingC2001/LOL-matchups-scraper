@@ -11,22 +11,22 @@ class DataCompiler:
         self.toplane_champs = ["Aatrox", "Akali", "Ambessa", "Aurora", "Camille", "Cassiopeia", "ChoGath", "Darius", "DrMundo", "Fiora", "Galio", "Gangplank", "Garen", "Gnar", "Gragas", "Gwen", "Heimerdinger", "Illaoi", "Irelia", "Jax", "Jayce", "KSante", "Karma", "Kayle", "Kennen", "Kled", "Malphite", "Maokai", "Mordekaiser", "Nasus", "Olaf", "Ornn", "Pantheon", "Poppy", "Quinn", "Renekton", "Rengar", "Riven", "Rumble", "Ryze", "Sett", "Shen", "Singed", "Sion", "Smolder", "Swain", "Sylas", "TahmKench", "Teemo", "Trundle", "Tryndamere", "Udyr", "Urgot", "Varus", "Vayne", "Viktor", "Vladimir", "Volibear", "Warwick", "Wukong", "Yasuo", "Yone", "Yorick", "Zac"]
         self.df = pd.DataFrame(columns=["Champion"]+self.own_champs)
 
-    def get_winrate(self, mode, patch):
+    def get_winrate(self, key, patch):
         """
         Class method to extract the winrate values for each own_champ vs toplane_champ
         Input:
-            mode: string to specify the winrate type/mode (base, delta1, delta2)
+            key: string to specify the filter key (winrate, delta1, delta2)
         """
         for champ2 in self.toplane_champs:
             row = [champ2]
             for champ1 in self.own_champs:
                 if champ1 != champ2:
                     scraper = MatchUpScraper(champ1=champ1, champ2=champ2, lane="top", tier="all", patch=patch)
-                    if mode == "base":
+                    if key == "winrate":
                         winrate = scraper.get_winrate()
-                    elif mode == "delta1":
+                    elif key == "delta1":
                         winrate = scraper.get_winrate_delta1()
-                    elif mode == "delta2":
+                    elif key == "delta2":
                         winrate = scraper.get_winrate_delta2()
                     row.append(winrate)
                 else:
@@ -51,7 +51,7 @@ if __name__ == "__main__":
     patch = args.patch
     print(f"Creating spreadsheet '{filename}' for game patch {patch} based on key={key}")
     compiler = DataCompiler()
-    compiler.get_winrate(mode=key, patch=patch)
+    compiler.get_winrate(key=key, patch=patch)
 
     compiler.write_to_file(filename)
         
