@@ -6,7 +6,7 @@ To generate the up-to-date spreadsheet, simply run the spreadsheetCreator script
 
 --key : one of [winrate, delta1, delta2]
 
---patch : game patch version for the data, e.g. 15.2
+--patch : game patch version for the data, e.g. 15.1, 15.2
     
 --filename : the name of the output spreadsheet including .xlsx extension
 
